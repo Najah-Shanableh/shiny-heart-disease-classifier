@@ -10,7 +10,7 @@ library(shiny)
 shinyUI(fluidPage(
 
   # Application title
-  titlePanel("LBI"),
+  titlePanel("Classification of Heart Disease w/KNN"),
 
   # Sidebar with a slider input for number of bins
   sidebarLayout(

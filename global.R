@@ -7,7 +7,7 @@ library(shiny)
 
 
 ds.classes <- rep("numeric", 14)
-ds <- read.table("C:/Users/Chris/Dropbox/OpenData/heartDiseaseData/processed.cleveland.data", sep = ",", header = F)
+ds <- read.table("processed.cleveland.data", sep = ",", header = F)
 
 
 names(ds) <- c( "age", "sex", "cp",
