@@ -5,23 +5,24 @@ library(class)
 library(caret)
 library(shiny)
 
-
-ds.classes <- rep("numeric", 14)
-ds <- read.table("processed.cleveland.data", sep = ",", header = F)
-
-
+# read in data and preprocess ####
+ds <- read.csv("processed.cleveland.data",  header = F)
+# add names to dataset
 names(ds) <- c( "age", "sex", "cp",
                 "trestbps", "chol",
                 "fbs", "restecg",
                 "thalach","exang",
                 "oldpeak","slope",
                 "ca","thal","num")
-
+# change the class of all columns to numeric
 ds <- as.data.frame(apply(ds, 2, as.numeric))
+# remove na/missing values (original data shows as ?)
 ds <- na.omit(ds)
+# all values of num > 0 are cases of heart disease 
+# as per the data descriptions at the uci repository
 ds$num[ds$num > 0] <- 1
-attach(ds)
 
+# standardize/normalize the data
 standardized.X <- scale(ds[,-14])
 set.seed(55)
 features <- 1:3
