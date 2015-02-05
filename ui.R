@@ -24,14 +24,16 @@ shinyUI(fluidPage(
 
     # Show a plot of the generated distribution
     mainPanel(
-      dataTableOutput('LBITable')
+      dataTableOutput('LBITable'),
+      plotOutput("distPlot"),
+      checkboxGroupInput("checkGroup", label = h3("Checkbox group"), 
+                         choices = feature.list,
+                         selected = "age"),
+      
+      
+      hr(),
+      fluidRow(column(3, verbatimTextOutput("value")))
     )
-  ),
-  checkboxGroupInput("checkGroup", label = h3("Checkbox group"), 
-                     choices = feature.list,
-                     selected = 2),
+  )
   
-  
-  hr(),
-  fluidRow(column(3, verbatimTextOutput("value")))
 ))

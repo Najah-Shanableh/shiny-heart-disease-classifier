@@ -5,13 +5,15 @@
 # http://shiny.rstudio.com
 #
  
-library(shiny)
+
 
 shinyServer(function(input, output) {
   
   set.seed(1)
   observe({
-  knn.pred <- knn(train.X[,input$checkGroup], test.X[,input$checkGroup], train.Y, k = input$k)
+  knn.pred <- knn(data.frame(train.X[,input$checkGroup]),
+                  data.frame(test.X[,input$checkGroup]),
+                  train.Y, k = input$k)
  
   # percent error from predictor
   
@@ -38,8 +40,23 @@ shinyServer(function(input, output) {
 #     cf.matrix <- as.data.frame(confusionMatrix(knn.pred, test.Y)[["table"]])
     }, options = table.settings
   )
-
+    
   })
-   output$value <- renderPrint({ (input$checkGroup) })
-   
+   output$value <- renderPrint({ head(train.X[,input$checkGroup]) })
+   observe({
+     
+     if(length(input$checkGroup) == 1){
+       output$distPlot <- renderPlot({plot(train.X[,input$checkGroup], train.Y)})
+     }else{
+       output$distPlot <- renderPlot({
+         featurePlot(x = train.X[, input$checkGroup],
+                     y = factor(train.Y),
+                     plot = "pairs", 
+         )  
+         #        ggpairs(cbind(train.X[,input$checkGroup], train.Y), 
+         #                colour = factor(train.Y), upper = "blank")  
+       })
+     }
+     
+   })
 })

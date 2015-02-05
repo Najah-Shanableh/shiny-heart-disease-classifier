@@ -5,6 +5,7 @@ library(class)
 library(caret)
 library(shiny)
 
+
 # read in data and preprocess ####
 ds <- read.csv("processed.cleveland.data",  header = F)
 # add names to dataset
@@ -37,6 +38,15 @@ train.X <- standardized.X[training.index,]
 test.X  <- standardized.X[-training.index,]
 train.Y <- ds$num[training.index]
 test.Y <- ds$num[-training.index]
+theme1 <- trellis.par.get()
+theme1$plot.symbol$col = rgb(.2, .2, .2, .4)
+theme1$plot.symbol$pch = 16
+theme1$plot.line$col = rgb(1, 0, 0, .7)
+theme1$plot.line$lwd <- 2
+trellis.par.set(theme1)
+
+
+
 
 table.settings <- list(searching = F, pageLength = 5, bLengthChange = F,
                        bPaginate = F, bInfo = F )
