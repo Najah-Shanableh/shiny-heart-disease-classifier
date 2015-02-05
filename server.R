@@ -51,7 +51,7 @@ shinyServer(function(input, output) {
        output$distPlot <- renderPlot({
          featurePlot(x = train.X[, input$checkGroup],
                      y = factor(train.Y),
-                     plot = "pairs", 
+                     plot = "box" 
          )  
          #        ggpairs(cbind(train.X[,input$checkGroup], train.Y), 
          #                colour = factor(train.Y), upper = "blank")  

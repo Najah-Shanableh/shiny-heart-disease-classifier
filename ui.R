@@ -19,20 +19,17 @@ shinyUI(fluidPage(
                   "number of neighbors",
                   min = 1,
                   max = 20,
-                  value = 5)
+                  value = 5),
+      checkboxGroupInput("checkGroup", label = h3("Dataset Features"), 
+                         choices = feature.list, inline = T,
+                         selected = "age")
+      
     ),
 
     # Show a plot of the generated distribution
     mainPanel(
       dataTableOutput('LBITable'),
-      plotOutput("distPlot"),
-      checkboxGroupInput("checkGroup", label = h3("Checkbox group"), 
-                         choices = feature.list,
-                         selected = "age"),
-      
-      
-      hr(),
-      fluidRow(column(3, verbatimTextOutput("value")))
+      plotOutput("distPlot")
     )
   )
   
