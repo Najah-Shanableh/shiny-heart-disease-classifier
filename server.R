@@ -24,8 +24,9 @@ shinyServer(function(input, output) {
   
 #   correct.detection <- 100*confusion.matrix[2,2]/sum(confusion.matrix[2,]) 
 #   print(correct.detection)
-#   
-  output$LBITable <- renderDataTable({
+# 
+  output$value <- renderText({ paste("Classification Error = ",ce(test.Y,knn.pred)) })
+  output$confusionMatrix <- renderDataTable({
     # modify this to show title - confusion matrix
     # /false positive/positive false negative/negative
     true.positive    <- sum(knn.pred == 1 & test.Y == 1)
@@ -37,24 +38,36 @@ shinyServer(function(input, output) {
     cbind(Outcome = row.names, as.data.frame(matrix( 
       c(true.negative, false.negative, false.positive, true.negative) ,
             nrow = 2, ncol = 2, dimnames = list(row.names, col.names))))
-#     cf.matrix <- as.data.frame(confusionMatrix(knn.pred, test.Y)[["table"]])
     }, options = table.settings
   )
     
   })
-   output$value <- renderPrint({ head(train.X[,input$checkGroup]) })
+   
    observe({
      
-     if(length(input$checkGroup) == 1){
-       output$distPlot <- renderPlot({plot(train.X[,input$checkGroup], train.Y)})
+     if(length(input$checkGroup)==0){
+       output$distPlot <- NULL
+     }
+     else if(length(input$checkGroup) == 1){
+       output$distPlot <- renderPlot({
+         featurePlot(x = train.X[, input$checkGroup],
+                     y = factor(train.Y, labels = c("Healthy", "Heart Disease")),
+                     scales = list(x = list(relation="free"),
+                                   y = list(relation="free")),
+                     plot = "density", 
+                     auto.key = list(columns = 2) )                                
+                                      
+                                      })
      }else{
        output$distPlot <- renderPlot({
          featurePlot(x = train.X[, input$checkGroup],
-                     y = factor(train.Y),
-                     plot = "box" 
+                     y = factor(train.Y, labels = c("Healthy", "Heart Disease")),
+                     scales = list(x = list(relation="free"),
+                                   y = list(relation="free")),
+                     plot = "density", 
+                     auto.key = list(columns = 2)
          )  
-         #        ggpairs(cbind(train.X[,input$checkGroup], train.Y), 
-         #                colour = factor(train.Y), upper = "blank")  
+         
        })
      }
      

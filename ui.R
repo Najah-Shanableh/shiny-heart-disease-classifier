@@ -28,7 +28,9 @@ shinyUI(fluidPage(
 
     # Show a plot of the generated distribution
     mainPanel(
-      dataTableOutput('LBITable'),
+      dataTableOutput('confusionMatrix'),
+      p('K-Nearest Neighbors...'),
+      verbatimTextOutput("value"),
       plotOutput("distPlot")
     )
   )

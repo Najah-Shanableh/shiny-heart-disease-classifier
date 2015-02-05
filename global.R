@@ -4,6 +4,7 @@ library(dplyr)
 library(class)
 library(caret)
 library(shiny)
+library(Metrics)
 
 
 # read in data and preprocess ####
