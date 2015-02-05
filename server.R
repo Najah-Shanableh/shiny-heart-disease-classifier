@@ -11,7 +11,7 @@ shinyServer(function(input, output) {
   
   set.seed(1)
   observe({
-  knn.pred <- knn(train.X, test.X, train.Y, k = input$k)
+  knn.pred <- knn(train.X[,input$checkGroup], test.X[,input$checkGroup], train.Y, k = input$k)
  
   # percent error from predictor
   
@@ -40,5 +40,6 @@ shinyServer(function(input, output) {
   )
 
   })
-
+   output$value <- renderPrint({ (input$checkGroup) })
+   
 })

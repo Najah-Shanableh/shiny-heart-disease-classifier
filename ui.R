@@ -26,5 +26,12 @@ shinyUI(fluidPage(
     mainPanel(
       dataTableOutput('LBITable')
     )
-  )
+  ),
+  checkboxGroupInput("checkGroup", label = h3("Checkbox group"), 
+                     choices = feature.list,
+                     selected = 2),
+  
+  
+  hr(),
+  fluidRow(column(3, verbatimTextOutput("value")))
 ))

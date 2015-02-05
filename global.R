@@ -14,6 +14,12 @@ names(ds) <- c( "age", "sex", "cp",
                 "thalach","exang",
                 "oldpeak","slope",
                 "ca","thal","num")
+feature.list <- list("age" = "age", "sex" ="sex",
+                     "cp"= "cp","trestbps" = "trestbps",
+                     "chol"="chol","fbs"="fbs",
+                     "restecg"="restecg","thalach"="thalach",
+                     "exang"="exang","oldpeak"="oldpeak",
+                     "slope"="slope","ca"="ca","thal"="thal")
 # change the class of all columns to numeric
 ds <- as.data.frame(apply(ds, 2, as.numeric))
 # remove na/missing values (original data shows as ?)
@@ -25,12 +31,12 @@ ds$num[ds$num > 0] <- 1
 # standardize/normalize the data
 standardized.X <- scale(ds[,-14])
 set.seed(55)
-features <- 1:3
+
 training.index <- createDataPartition(ds$num, p = .5,list = F)
-train.X <- standardized.X[training.index, features]
-test.X  <- standardized.X[-training.index, features]
-train.Y <- num[training.index]
-test.Y <- num[-training.index]
+train.X <- standardized.X[training.index,]
+test.X  <- standardized.X[-training.index,]
+train.Y <- ds$num[training.index]
+test.Y <- ds$num[-training.index]
 
 table.settings <- list(searching = F, pageLength = 5, bLengthChange = F,
                        bPaginate = F, bInfo = F )
